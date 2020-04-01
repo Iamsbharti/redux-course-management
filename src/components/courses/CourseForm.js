@@ -7,7 +7,7 @@ function CourseForm({
   authors,
   onSave,
   onChange,
-  errors,
+  errors = {},
   saving = false
 }) {
   return (
@@ -28,10 +28,10 @@ function CourseForm({
           error={ErrorEvent.title}
         />
         <SelectInput
-          name="authors"
+          name="authorId"
           label="Authors"
           value={course.authorId || ""}
-          defaultOption="Select Authors"
+          defaultOption="Select Author"
           options={authors.map(author => ({
             text: author.name,
             value: author.id
@@ -46,6 +46,9 @@ function CourseForm({
           onChange={onChange}
           error={errors.category}
         />
+        <button type="submit" disabled={saving} className="btn btn-primary">
+          {saving ? "Saving..." : "Save"}
+        </button>
       </form>
     </div>
   );

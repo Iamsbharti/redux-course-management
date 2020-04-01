@@ -11,19 +11,20 @@ function ManageCoursePage({
   authors,
   loadCourses,
   loadAuthors,
+  saveCourse,
   ...props
 }) {
-  const [course, setCourse] = useState(props.course);
+  const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
   useEffect(() => {
     if (courses.length === 0) {
-      loadCourses().then(error => {
-        alert("Error in loading Courses" + error);
+      loadCourses().catch(error => {
+        alert("Error in loading Courses:" + error);
       });
     }
     if (authors.length === 0) {
-      loadAuthors().then(error => {
-        alert("Error in loading authors" + error);
+      loadAuthors().catch(error => {
+        alert("Error in loading authors:" + error);
       });
     }
   }, []);
@@ -36,6 +37,7 @@ function ManageCoursePage({
   }
   function handleSubmit(event) {
     event.preventDefault();
+    saveCourse(course);
   }
   return (
     <CourseForm
@@ -56,13 +58,15 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = {
   loadCourses: courseActions.loadCourses,
-  loadAuthors: authorActions.loadAuthors
+  loadAuthors: authorActions.loadAuthors,
+  saveCourse: courseActions.saveCourse
 };
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  loadAuthors: PropTypes.func.isRequired
+  loadAuthors: PropTypes.func.isRequired,
+  saveCourse: PropTypes.func.isRequired
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
