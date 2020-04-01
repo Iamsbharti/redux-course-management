@@ -4,11 +4,11 @@ import * as courseApi from "../../api/courseApi";
 export function loadCourseSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
 }
-export function createCourseSuccess(courses) {
-  return { type: types.CREATE_COURSE_SUCCEES, courses };
+export function createCourseSuccess(course) {
+  return { type: types.CREATE_COURSE_SUCCEES, course };
 }
-export function updateCourseSuccess(courses) {
-  return { type: types.UPDATE_COURSE_SUCCEES, courses };
+export function updateCourseSuccess(course) {
+  return { type: types.UPDATE_COURSE_SUCCEES, course };
 }
 export function loadCourses() {
   return function(dispatch) {
