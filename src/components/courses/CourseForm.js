@@ -2,7 +2,14 @@ import React from "react";
 import TextInput from "../common/TextInput";
 import SelectInput from "../common/SelectInput";
 import PropTypes from "prop-types";
-function CourseForm({ course, authors, onSave, onChange, errors, savings }) {
+function CourseForm({
+  course,
+  authors,
+  onSave,
+  onChange,
+  errors,
+  saving = false
+}) {
   return (
     <div>
       <form onSubmit={onSave}>
@@ -44,11 +51,11 @@ function CourseForm({ course, authors, onSave, onChange, errors, savings }) {
   );
 }
 CourseForm.propTypes = {
-  course: PropTypes.array.isRequired,
+  course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  savings: PropTypes.bool
+  errors: PropTypes.object,
+  saving: PropTypes.bool
 };
 export default CourseForm;

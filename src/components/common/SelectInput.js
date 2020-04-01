@@ -11,14 +11,19 @@ function SelectInput({
   options
 }) {
   return (
-    <div className="form-field">
+    <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <div className="field">
-        <select name={name} value={value} onChange={onChange}>
+        <select
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="form-control"
+        >
           <option value="">{defaultOption}</option>
           {options.map(option => (
             <option key={option.value} value={option.value}>
-              {option.name}
+              {option.text}
             </option>
           ))}
         </select>
@@ -29,10 +34,10 @@ function SelectInput({
 }
 SelectInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType[(PropTypes.number, PropTypes.string)],
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
-  defaultOption: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  defaultOption: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object),
   label: PropTypes.string.isRequired
 };

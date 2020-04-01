@@ -10,7 +10,13 @@ function TextInput({ name, value, onChange, error, label }) {
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
       <div className="field">
-        <input type="text" name={name} value={value} onChange={onChange} />
+        <input
+          type="text"
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="form-control"
+        />
         {error && <div className="alert alert-danger">{error}</div>}
       </div>
     </div>
@@ -18,9 +24,9 @@ function TextInput({ name, value, onChange, error, label }) {
 }
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType[(Number, String)],
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
   label: PropTypes.string.isRequired
 };
 export default TextInput;

@@ -34,11 +34,15 @@ function ManageCoursePage({
       [name]: name === "authorId" ? parseInt(value, 10) : value
     }));
   }
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
   return (
     <CourseForm
-      courses={course}
+      course={course}
       authors={authors}
-      onSave={handleChange}
+      onChange={handleChange}
+      onSave={handleSubmit}
       errors={errors}
     />
   );
