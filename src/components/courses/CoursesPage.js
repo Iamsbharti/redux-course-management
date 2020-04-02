@@ -31,15 +31,20 @@ class CoursesPage extends Component {
       <>
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
         <h2>Courses</h2>
-        <Spinner />
-        <button
-          style={{ marginBottom: 20 }}
-          className="btn btn-primary add-course"
-          onClick={() => this.setState({ redirectToAddCoursePage: true })}
-        >
-          Add Course
-        </button>
-        <CourseList courses={this.props.courses} />
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <button
+              style={{ marginBottom: 20 }}
+              className="btn btn-primary add-course"
+              onClick={() => this.setState({ redirectToAddCoursePage: true })}
+            >
+              Add Course
+            </button>
+            <CourseList courses={this.props.courses} />
+          </>
+        )}
       </>
     );
   }
@@ -55,7 +60,8 @@ function mapStateToProps(state) {
               authorName: state.authors.find(a => a.id === course.authorId).name
             };
           }),
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgress > 0
   };
 }
 //(Way -1) manually dispatching actions;
@@ -78,6 +84,7 @@ CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   //dispatch: PropTypes.func.isRequired
   //createCourse: PropTypes.func.isRequired
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
