@@ -26,11 +26,13 @@ class CoursesPage extends Component {
       });
     }
   }
-  handleDelete = course => {
-    toast.warn("Course Deleted");
-    this.props.actions.deleteCourse(course).catch(error => {
-      toast.error("Delete Failed " + error.message, { autoClose: false });
-    });
+  handleDelete = async course => {
+    toast.success("Course Deleted");
+    try {
+      await this.props.actions.deleteCourse(course);
+    } catch {
+      toast.error("Delete Failed", { autoClose: false });
+    }
   };
   render() {
     return (
