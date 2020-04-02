@@ -8,7 +8,7 @@ function CourseForm({
   onSave,
   onChange,
   errors = {},
-  saving = false
+  saving
 }) {
   return (
     <div>

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
-
+import { Toast, toast } from "react-toastify";
 function ManageCoursePage({
   courses,
   authors,
@@ -17,6 +17,7 @@ function ManageCoursePage({
   ...props
 }) {
   const [course, setCourse] = useState({ ...props.course });
+  const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
   useEffect(() => {
     if (courses.length === 0) {
@@ -41,7 +42,9 @@ function ManageCoursePage({
   }
   function handleSubmit(event) {
     event.preventDefault();
+    setSaving(true);
     saveCourse(course).then(() => {
+      toast.success("Course Saved");
       history.push("/courses");
     });
   }
@@ -54,6 +57,7 @@ function ManageCoursePage({
       onChange={handleChange}
       onSave={handleSubmit}
       errors={errors}
+      saving={saving}
     />
   );
 }
