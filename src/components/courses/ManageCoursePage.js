@@ -43,10 +43,15 @@ function ManageCoursePage({
   function handleSubmit(event) {
     event.preventDefault();
     setSaving(true);
-    saveCourse(course).then(() => {
-      toast.success("Course Saved");
-      history.push("/courses");
-    });
+    saveCourse(course)
+      .then(() => {
+        toast.success("Course Saved");
+        history.push("/courses");
+      })
+      .catch(error => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
   return courses.length === 0 || authors.length === 0 ? (
     <Spinner />
