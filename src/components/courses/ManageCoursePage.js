@@ -5,6 +5,7 @@ import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
 
 function ManageCoursePage({
   courses,
@@ -44,7 +45,9 @@ function ManageCoursePage({
       history.push("/courses");
     });
   }
-  return (
+  return courses.length === 0 || authors.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       authors={authors}
