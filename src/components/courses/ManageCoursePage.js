@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
-import { Toast, toast } from "react-toastify";
+import { toast } from "react-toastify";
 function ManageCoursePage({
   courses,
   authors,
@@ -40,8 +40,18 @@ function ManageCoursePage({
       [name]: name === "authorId" ? parseInt(value, 10) : value
     }));
   }
+  function isFormValid() {
+    const { title, category, authorId } = course;
+    const errors = {};
+    if (!title) errors.title = "Title is required";
+    if (!category) errors.category = "Category is required";
+    if (!authorId) errors.author = "Author is required";
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
   function handleSubmit(event) {
     event.preventDefault();
+    if (!isFormValid()) return;
     setSaving(true);
     saveCourse(course)
       .then(() => {

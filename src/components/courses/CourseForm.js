@@ -25,7 +25,7 @@ function CourseForm({
           label="Title"
           value={course.title}
           onChange={onChange}
-          error={ErrorEvent.title}
+          error={errors.title}
         />
         <SelectInput
           name="authorId"
