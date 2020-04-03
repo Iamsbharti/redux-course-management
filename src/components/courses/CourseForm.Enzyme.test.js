@@ -19,7 +19,7 @@ it("should render form and header", () => {
   const wrapper = renderCourseForm();
   //console.log(wrapper.debug());
   expect(wrapper.find("form").length).toBe(1);
-  expect(wrapper.find("h2").text()).toEqual("SaveCourse");
+  expect(wrapper.find("h2").text()).toEqual("Save Course");
 });
 it("labels save buttons as 'save' when not saving", () => {
   const wrapper = renderCourseForm();

@@ -8,12 +8,12 @@ function CourseForm({
   onSave,
   onChange,
   errors = {},
-  saving
+  saving = false
 }) {
   return (
     <div>
       <form onSubmit={onSave}>
-        <h2>{course.id ? "Edit" : "Save"}Course</h2>
+        <h2>{course.id ? "Edit" : "Save"} Course</h2>
         {errors.onSave && (
           <div className="alert alert-danger" role="alert">
             {errors.onSave}

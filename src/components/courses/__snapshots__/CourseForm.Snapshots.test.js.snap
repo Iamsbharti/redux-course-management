@@ -7,7 +7,7 @@ exports[`Sets submit button to 'saving...' when saving is true 1`] = `
   >
     <h2>
       Edit
-      Course
+       Course
     </h2>
     <div
       className="form-group"
@@ -107,7 +107,7 @@ exports[`sets submit button to 'saved' when savinng is false 1`] = `
   >
     <h2>
       Edit
-      Course
+       Course
     </h2>
     <div
       className="form-group"
