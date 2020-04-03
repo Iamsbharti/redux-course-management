@@ -17,7 +17,6 @@ describe("Store test Create Course", () => {
 
     //assert
     const createdCourse = store.getState().courses[0];
-    console.log(store.courses);
     expect(createdCourse).toEqual(course);
   });
 });

@@ -22,6 +22,5 @@ it("sets error when attenpting to sumbmit without title", () => {
   const wrapper = renderManageCoursePage();
   wrapper.find("form").simulate("submit");
   const error = wrapper.find(".alert").first();
-  console.log(error.text());
   expect(error.text()).toBe("Title is required");
 });
