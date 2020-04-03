@@ -31,8 +31,37 @@ describe("Load course thunk", () => {
 
     //mock store
     const store = mockStore({ courses: [] });
+
+    //assert
     return store.dispatch(courseActions.loadCourses()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+});
+
+describe("Update Course Thunk", () => {
+  it("Should Create a BEGIN_API_CALL and UPDATE_COURSE_SUCCESS actions when saving a course", () => {
+    //mock api call
+    fetchMock.mock("*", {
+      body: courses[0],
+      headers: { "content-type": "applciation/json" },
+      overwriteRoutes: true
+    });
+
+    //arrange
+    const course = courses[0];
+    const expectedActions = [
+      { type: types.BEGIN_API_CALL },
+      { type: types.UPDATE_COURSE_SUCCESS, course }
+    ];
+    //mock store
+    const store = mockStore({ course: [] });
+
+    //assert
+    return store
+      .dispatch(courseActions.saveCourse(course))
+      .then(savedCourse => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 });
