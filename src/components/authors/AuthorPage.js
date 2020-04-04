@@ -5,25 +5,38 @@ import { bindActionCreators } from "redux";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function AuthorPage({ authors, actions, loading }) {
   useEffect(() => {
     if (authors.length === 0) {
       actions.loadAuthors();
     }
   }, []);
+  function handleDelete(id) {
+    toast.success("Author Deleted");
+    console.log("Author deleted:" + id);
+  }
 
-  return loading ? <Spinner /> : <AuthorList authors={authors} />;
+  return loading ? (
+    <Spinner />
+  ) : (
+    <>
+      <h2>Authors</h2>
+      <Link style={{ marginBottom: 20 }} to="/author">
+        Add Authors
+      </Link>
+      <AuthorList authors={authors} onDelete={handleDelete} />
+    </>
+  );
 }
 function mapStateToProps(state) {
-  //debugger;
   return {
     authors: state.authors,
     loading: state.apiCallsInProgress > 0,
   };
 }
 function mapActionsToProps(dispatch) {
-  //debugger;
   return {
     actions: {
       loadAuthors: bindActionCreators(loadAuthors, dispatch),

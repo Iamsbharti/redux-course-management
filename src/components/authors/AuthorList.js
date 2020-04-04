@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-function AuthorList({ authors }) {
+function AuthorList({ authors, onDelete }) {
   return (
     <div>
-      <h2>Authors</h2>
       <table className="table">
         <thead>
           <tr>
@@ -17,6 +16,14 @@ function AuthorList({ authors }) {
               <td>
                 <Link to={`/authors/${author.id}`}>{author.name}</Link>
               </td>
+              <td>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => onDelete(author.id)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -26,5 +33,6 @@ function AuthorList({ authors }) {
 }
 AuthorList.propTypes = {
   authors: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 export default AuthorList;

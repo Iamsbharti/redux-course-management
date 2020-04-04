@@ -6,6 +6,7 @@ import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
 import CoursesPage from "./courses/CoursesPage";
 import ManageCoursePage from "../components/courses/ManageCoursePage"; // eslint-disable-line import/no-named-as-default
+import ManageAuthorPage from "./authors/ManageAuthorsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthorPage from "./authors/AuthorPage";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/course/:slug" component={ManageCoursePage} />
         <Route path="/course" component={ManageCoursePage} />
         <Route path="/authors" component={AuthorPage} />
+        <Route path="/author" component={ManageAuthorPage} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} />
