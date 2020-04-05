@@ -23,7 +23,11 @@ function AuthorPage({ authors, actions, loading }) {
   ) : (
     <>
       <h2>Authors</h2>
-      <Link style={{ marginBottom: 20 }} to="/author">
+      <Link
+        style={{ marginBottom: 20 }}
+        className="btn btn-primary"
+        to="/author"
+      >
         Add Authors
       </Link>
       <AuthorList authors={authors} onDelete={handleDelete} />

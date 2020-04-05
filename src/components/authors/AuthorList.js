@@ -14,7 +14,7 @@ function AuthorList({ authors, onDelete }) {
           {authors.map((author) => (
             <tr key={author.id}>
               <td>
-                <Link to={`/authors/${author.id}`}>{author.name}</Link>
+                <Link to={`/author/${author.id}`}>{author.name}</Link>
               </td>
               <td>
                 <button
