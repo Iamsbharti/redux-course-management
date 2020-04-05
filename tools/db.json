@@ -83,42 +83,6 @@
     {
       "id": 3,
       "name": "Dan Wahlin"
-    },
-    {
-      "name": "",
-      "createdAt": 1586051867762,
-      "id": 4
-    },
-    {
-      "name": "",
-      "createdAt": 1586051903683,
-      "id": 5
-    },
-    {
-      "name": "",
-      "createdAt": 1586052195956,
-      "id": 6
-    },
-    {
-      "name": "",
-      "createdAt": 1586052553704,
-      "id": 7
-    },
-    {
-      "name": "",
-      "createdAt": 1586053033457,
-      "id": 8
-    },
-    {
-      "name": "",
-      "author": "d",
-      "createdAt": 1586053176453,
-      "id": 9
-    },
-    {
-      "name": "dfsdfdf",
-      "createdAt": 1586053317968,
-      "id": 10
     }
   ]
 }

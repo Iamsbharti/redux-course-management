@@ -19,7 +19,7 @@ function AuthorList({ authors, onDelete }) {
               <td>
                 <button
                   className="btn btn-outline-danger"
-                  onClick={() => onDelete(author.id)}
+                  onClick={() => onDelete(author)}
                 >
                   Delete
                 </button>

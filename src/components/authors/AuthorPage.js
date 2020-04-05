@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import AuthorList from "./AuthorList";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadAuthors } from "../../redux/actions/authorActions";
+import { loadAuthors, deleteAuthor } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
@@ -13,9 +13,9 @@ function AuthorPage({ authors, actions, loading }) {
       actions.loadAuthors();
     }
   }, []);
-  function handleDelete(id) {
+  function handleDelete(author) {
     toast.success("Author Deleted");
-    console.log("Author deleted:" + id);
+    actions.deleteAuthor(author);
   }
 
   return loading ? (
@@ -44,6 +44,7 @@ function mapActionsToProps(dispatch) {
   return {
     actions: {
       loadAuthors: bindActionCreators(loadAuthors, dispatch),
+      deleteAuthor: bindActionCreators(deleteAuthor, dispatch),
     },
   };
 }
