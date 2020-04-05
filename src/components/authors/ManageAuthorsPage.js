@@ -54,7 +54,7 @@ function ManageAuthorsPage({ authors, actions, history }) {
   }
   return (
     <div>
-      <h1>Manage Authors</h1>
+      <h1 style={{ color: "green" }}>Manage Authors</h1>
       <AuthorForm
         author={author}
         errors={errors}
