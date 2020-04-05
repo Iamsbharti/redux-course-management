@@ -2,7 +2,7 @@
 
 ## Get Started
 
-**[Netlify Status](https://api.netlify.com/api/v1/badges/0da78f59-fe04-4ace-bebb-2c40b2ce1617/
+**[Netlify Status](https://api.netlify.com/api/v1/badges/0da78f59-fe04-4ace-bebb-2c40b2ce1617/)
 **[deploy-status](https://app.netlify.com/sites/course-management-app-redux/deploys)
 
 1. **Install [Node 8](https://nodejs.org)** or newer.
