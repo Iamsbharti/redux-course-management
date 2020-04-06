@@ -10,27 +10,28 @@ import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 class CoursesPage extends Component {
   state = {
-    redirectToAddCoursePage: false
+    redirectToAddCoursePage: false,
   };
   componentDidMount() {
     const { authors, courses, actions } = this.props;
 
     if (courses.length === 0) {
-      actions.loadCourses().catch(error => {
+      actions.loadCourses().catch((error) => {
         alert("Loading courses failed" + error);
       });
     }
     if (authors.length === 0) {
-      actions.loadAuthors().catch(error => {
+      actions.loadAuthors().catch((error) => {
         alert("Loading Author failed" + error);
       });
     }
   }
-  handleDelete = async course => {
+  handleDelete = async (course) => {
     toast.success("Course Deleted");
     try {
       await this.props.actions.deleteCourse(course);
-    } catch {
+    } catch (error) {
+      console.log(error);
       toast.error("Delete Failed", { autoClose: false });
     }
   };
@@ -51,7 +52,9 @@ class CoursesPage extends Component {
               Add Course
             </button>
             <CourseList
-              courses={this.props.courses}
+              courses={this.props.courses.sort(function (c1, c2) {
+                return c2.id - c1.id;
+              })}
               onDelete={this.handleDelete}
             />
           </>
@@ -60,19 +63,21 @@ class CoursesPage extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     courses:
       state.authors.length === 0
         ? []
-        : state.courses.map(course => {
+        : state.courses.map((course) => {
             return {
               ...course,
-              authorName: state.authors.find(a => a.id === course.authorId).name
+              authorName: state.authors.find((a) => a.id === course.authorId)
+                .name,
             };
           }),
     authors: state.authors,
-    loading: state.apiCallsInProgress > 0
+    loading: state.apiCallsInProgress > 0,
   };
 }
 //(Way -1) manually dispatching actions;
@@ -87,8 +92,8 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
-      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch)
-    }
+      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch),
+    },
   };
 }
 CoursesPage.propTypes = {
@@ -97,6 +102,6 @@ CoursesPage.propTypes = {
   //dispatch: PropTypes.func.isRequired
   //createCourse: PropTypes.func.isRequired
   actions: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

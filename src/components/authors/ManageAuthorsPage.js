@@ -15,10 +15,12 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
 
   useEffect(() => {
     if (authors.length === 0) {
+      //debugger;
       actions.loadAuthors().catch((error) => {
         alert("Not able to fetch Authors:" + error);
       });
     } else {
+      debugger;
       setAuthor({ ...props.author });
     }
   }, [props.author]);

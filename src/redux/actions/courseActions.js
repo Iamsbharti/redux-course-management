@@ -13,15 +13,16 @@ export function updateCourseSuccess(course) {
 export function deleteCourseOptimistic(course) {
   return { type: types.DELETE_COURSE_OPTIMISTIC, course };
 }
+
 export function loadCourses() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return courseApi
       .getCourses()
-      .then(courses => {
+      .then((courses) => {
         dispatch(loadCourseSuccess(courses));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(apiCallError(error));
         throw error;
       });
@@ -29,23 +30,23 @@ export function loadCourses() {
 }
 
 export function saveCourse(course) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return courseApi
       .saveCourse(course)
-      .then(savedCourse => {
+      .then((savedCourse) => {
         course.id
           ? dispatch(updateCourseSuccess(savedCourse))
           : dispatch(createCourseSuccess(savedCourse));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(apiCallError(error));
         throw error;
       });
   };
 }
 export function deleteCourse(course) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(deleteCourseOptimistic(course));
     return courseApi.deleteCourse(course.id);
   };
