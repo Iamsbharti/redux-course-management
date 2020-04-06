@@ -31,8 +31,6 @@ export function loadAuthors() {
 }
 
 export function saveAuthors(author) {
-  console.log("author-in act:" + author);
-  debugger;
   return function (dispatch) {
     dispatch(beginApiCall);
     return authorsApi.saveAuthor(author).then((savedAuthor) => {

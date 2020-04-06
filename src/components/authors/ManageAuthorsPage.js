@@ -5,27 +5,26 @@ import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import AuthorForm from "./AuthorForm";
+import { newAuthor } from "../../../tools/mockData";
 
-function ManageAuthorsPage({ authors, actions, history }) {
-  const [author, setAuthor] = useState({
-    name: "",
-  });
+function ManageAuthorsPage({ authors, actions, history, ...props }) {
+  const [author, setAuthor] = useState({ ...props.author });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-
+  console.log("author-prop:" + author.name);
   useEffect(() => {
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
         alert("Not able to fetch Authors:" + error);
       });
+    } else {
+      setAuthor({ ...props.author });
     }
-  }, []);
+  }, [props.author]);
   function isFormValid() {
-    debugger;
     const _errors = {};
-    if (!author.name) {
-      _errors.name = "Name Is Required";
-    }
+    if (!author.name) _errors.name = "Name Is Required";
+
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   }
@@ -38,8 +37,7 @@ function ManageAuthorsPage({ authors, actions, history }) {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    if (!isFormValid) return;
-    debugger;
+    if (!isFormValid()) return;
     setSaving(true);
     actions
       .saveAuthors(author)
@@ -65,10 +63,19 @@ function ManageAuthorsPage({ authors, actions, history }) {
     </div>
   );
 }
+function getAuthorById(authors, id) {
+  console.log(authors.find((author) => author.id === id));
+  return authors.find((author) => author.id === id) || null;
+}
 function mapStateToProps(state, ownProps) {
+  const id = parseInt(ownProps.match.params.id, 10);
+  const author =
+    id && state.authors.length > 0
+      ? getAuthorById(state.authors, id)
+      : newAuthor;
   return {
     authors: state.authors,
-    id: ownProps.match.params.id,
+    author,
   };
 }
 function mapActionsToProps(dispatch) {
@@ -83,5 +90,6 @@ ManageAuthorsPage.propTypes = {
   authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   history: PropTypes.object,
+  author: PropTypes.object,
 };
 export default connect(mapStateToProps, mapActionsToProps)(ManageAuthorsPage);
