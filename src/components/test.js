@@ -5,5 +5,8 @@ function showCourses() {
     return b.id - a.id;
   });
   course.map((c) => console.log(c.id));
+  const pathname = "/404author";
+  console.log(pathname.endsWith("author"));
 }
+
 showCourses();

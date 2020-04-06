@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import AuthorForm from "./AuthorForm";
 import { newAuthor } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
-
+import { Redirect } from "react-router-dom";
 function ManageAuthorsPage({ authors, actions, history, ...props }) {
   const [author, setAuthor] = useState({ ...props.author });
   const [errors, setErrors] = useState({});
@@ -15,12 +15,10 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
 
   useEffect(() => {
     if (authors.length === 0) {
-      //debugger;
       actions.loadAuthors().catch((error) => {
         alert("Not able to fetch Authors:" + error);
       });
     } else {
-      debugger;
       setAuthor({ ...props.author });
     }
   }, [props.author]);
@@ -55,7 +53,7 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
   }
   return authors.length === 0 ? (
     <Spinner />
-  ) : (
+  ) : author.id !== null ? (
     <AuthorForm
       author={author}
       errors={errors}
@@ -63,13 +61,16 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
       onChange={handleChange}
       onSave={handleSubmit}
     />
+  ) : (
+    <Redirect to="/404NotFoundAuthor" />
   );
 }
 function getAuthorById(authors, id) {
-  return authors.find((author) => author.id === id) || null;
+  return authors.find((author) => author.id === id) || newAuthor;
 }
 function mapStateToProps(state, ownProps) {
   const id = parseInt(ownProps.match.params.id, 10);
+  console.log(id);
   const author =
     id && state.authors.length > 0
       ? getAuthorById(state.authors, id)
@@ -91,6 +92,6 @@ ManageAuthorsPage.propTypes = {
   authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   history: PropTypes.object,
-  author: PropTypes.object,
+  author: PropTypes.object.isRequired,
 };
 export default connect(mapStateToProps, mapActionsToProps)(ManageAuthorsPage);

@@ -15,7 +15,7 @@ function App() {
     <div className="container-fluid">
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/courses" component={CoursesPage} />
         <Route path="/course/:slug" component={ManageCoursePage} />
@@ -23,6 +23,8 @@ function App() {
         <Route path="/authors" component={AuthorPage} />
         <Route path="/author/:id" component={ManageAuthorsPage} />
         <Route path="/author" component={ManageAuthorsPage} />
+        <Route path="/404NotFoundAuthor" component={PageNotFound} />
+        <Route path="/404NotFoundCourse" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} />

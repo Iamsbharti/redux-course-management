@@ -7,6 +7,7 @@ import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 export function ManageCoursePage({
   courses,
   authors,
@@ -21,23 +22,23 @@ export function ManageCoursePage({
   const [errors, setErrors] = useState({});
   useEffect(() => {
     if (courses.length === 0) {
-      loadCourses().catch(error => {
+      loadCourses().catch((error) => {
         alert("Error in loading Courses:" + error);
       });
     } else {
       setCourse({ ...props.course });
     }
     if (authors.length === 0) {
-      loadAuthors().catch(error => {
+      loadAuthors().catch((error) => {
         alert("Error in loading authors:" + error);
       });
     }
   }, [props.course]);
   function handleChange(event) {
     const { name, value } = event.target;
-    setCourse(prevCourse => ({
+    setCourse((prevCourse) => ({
       ...prevCourse,
-      [name]: name === "authorId" ? parseInt(value, 10) : value
+      [name]: name === "authorId" ? parseInt(value, 10) : value,
     }));
   }
   function isFormValid() {
@@ -58,14 +59,14 @@ export function ManageCoursePage({
         toast.success("Course Saved");
         history.push("/courses");
       })
-      .catch(error => {
+      .catch((error) => {
         setSaving(false);
         setErrors({ onSave: error.message });
       });
   }
   return courses.length === 0 || authors.length === 0 ? (
     <Spinner />
-  ) : (
+  ) : course.id !== null ? (
     <CourseForm
       course={course}
       authors={authors}
@@ -74,10 +75,12 @@ export function ManageCoursePage({
       errors={errors}
       saving={saving}
     />
+  ) : (
+    <Redirect to="/404NotFoundCourse" />
   );
 }
 function getCourseBySlug(courses, slug) {
-  return courses.find(course => course.slug === slug) || null;
+  return courses.find((course) => course.slug === slug) || newCourse;
 }
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
@@ -88,13 +91,13 @@ function mapStateToProps(state, ownProps) {
   return {
     course,
     courses: state.courses,
-    authors: state.authors
+    authors: state.authors,
   };
 }
 const mapDispatchToProps = {
   loadCourses: courseActions.loadCourses,
   loadAuthors: authorActions.loadAuthors,
-  saveCourse: courseActions.saveCourse
+  saveCourse: courseActions.saveCourse,
 };
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
@@ -103,6 +106,6 @@ ManageCoursePage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
