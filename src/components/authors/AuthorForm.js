@@ -15,7 +15,7 @@ function AuthorForm({ author, onChange, onSave, saving = false, errors }) {
 
         <TextInput
           name="name"
-          label="Name"
+          label="Author Name"
           value={author.name}
           onChange={onChange}
           error={errors.name}

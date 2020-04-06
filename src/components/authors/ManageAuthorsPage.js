@@ -6,12 +6,13 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import AuthorForm from "./AuthorForm";
 import { newAuthor } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
 
 function ManageAuthorsPage({ authors, actions, history, ...props }) {
   const [author, setAuthor] = useState({ ...props.author });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-  console.log("author-prop:" + author.name);
+
   useEffect(() => {
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -50,21 +51,19 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
         setErrors({ onSave: error });
       });
   }
-  return (
-    <div>
-      <h1 style={{ color: "green" }}>Manage Authors</h1>
-      <AuthorForm
-        author={author}
-        errors={errors}
-        saving={saving}
-        onChange={handleChange}
-        onSave={handleSubmit}
-      />
-    </div>
+  return authors.length === 0 ? (
+    <Spinner />
+  ) : (
+    <AuthorForm
+      author={author}
+      errors={errors}
+      saving={saving}
+      onChange={handleChange}
+      onSave={handleSubmit}
+    />
   );
 }
 function getAuthorById(authors, id) {
-  console.log(authors.find((author) => author.id === id));
   return authors.find((author) => author.id === id) || null;
 }
 function mapStateToProps(state, ownProps) {
