@@ -8,6 +8,7 @@ import CourseList from "./CourseList";
 import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
+import SortCourse from "./SortCourse";
 class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
@@ -51,6 +52,7 @@ class CoursesPage extends Component {
             >
               Add Course
             </button>
+            <SortCourse />
             <CourseList
               courses={this.props.courses.sort(function (c1, c2) {
                 return c2.id - c1.id;

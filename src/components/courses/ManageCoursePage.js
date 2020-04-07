@@ -7,7 +7,7 @@ import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
-import { Redirect } from "react-router-dom";
+
 export function ManageCoursePage({
   courses,
   authors,
@@ -66,7 +66,7 @@ export function ManageCoursePage({
   }
   return courses.length === 0 || authors.length === 0 ? (
     <Spinner />
-  ) : course.id !== null ? (
+  ) : (
     <CourseForm
       course={course}
       authors={authors}
@@ -75,8 +75,6 @@ export function ManageCoursePage({
       errors={errors}
       saving={saving}
     />
-  ) : (
-    <Redirect to="/404NotFoundCourse" />
   );
 }
 function getCourseBySlug(courses, slug) {

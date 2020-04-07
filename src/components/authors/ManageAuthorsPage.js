@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 import AuthorForm from "./AuthorForm";
 import { newAuthor } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
-import { Redirect } from "react-router-dom";
-function ManageAuthorsPage({ authors, actions, history, ...props }) {
+
+function ManageAuthorsPage({ authors, actions, history, id, ...props }) {
   const [author, setAuthor] = useState({ ...props.author });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -21,7 +21,11 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
     } else {
       setAuthor({ ...props.author });
     }
-  }, [props.author]);
+    console.log("author:" + author.id);
+    if (author.id === null) {
+      setLoading(true);
+    }
+  }, [props.author, id]);
   function isFormValid() {
     const _errors = {};
     if (!author.name) _errors.name = "Name Is Required";
@@ -53,7 +57,7 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
   }
   return authors.length === 0 ? (
     <Spinner />
-  ) : author.id !== null ? (
+  ) : (
     <AuthorForm
       author={author}
       errors={errors}
@@ -61,8 +65,6 @@ function ManageAuthorsPage({ authors, actions, history, ...props }) {
       onChange={handleChange}
       onSave={handleSubmit}
     />
-  ) : (
-    <Redirect to="/404NotFoundAuthor" />
   );
 }
 function getAuthorById(authors, id) {
@@ -93,5 +95,6 @@ ManageAuthorsPage.propTypes = {
   actions: PropTypes.object.isRequired,
   history: PropTypes.object,
   author: PropTypes.object.isRequired,
+  id: PropTypes.number,
 };
 export default connect(mapStateToProps, mapActionsToProps)(ManageAuthorsPage);

@@ -10,3 +10,14 @@ function showCourses() {
 }
 
 showCourses();
+authors.length === 0 ? (
+  <Spinner />
+) : (
+  <AuthorForm
+    author={author}
+    errors={errors}
+    saving={saving}
+    onChange={handleChange}
+    onSave={handleSubmit}
+  />
+);
