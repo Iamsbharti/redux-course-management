@@ -64,7 +64,7 @@ export function ManageCoursePage({
         setErrors({ onSave: error.message });
       });
   }
-  return courses.length === 0 || authors.length === 0 ? (
+  return courses.length === 0 && authors.length === 0 ? (
     <Spinner />
   ) : (
     <CourseForm

@@ -27,7 +27,7 @@ function App() {
         <Route path="/404NotFoundCourse" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>
-      <ToastContainer autoClose={3000} />
+      <ToastContainer autoClose={3000} hideProgressBar />
     </div>
   );
 }

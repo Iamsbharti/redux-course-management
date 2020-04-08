@@ -13,6 +13,7 @@ class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
     sortingOption: "Sort By id",
+    courseLength: 0,
   };
   componentDidMount() {
     const { authors, courses, actions } = this.props;
@@ -21,6 +22,8 @@ class CoursesPage extends Component {
       actions.loadCourses().catch((error) => {
         alert("Loading courses failed" + error);
       });
+    } else {
+      this.setState({ courseLength: this.props.courses.length });
     }
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -80,14 +83,20 @@ class CoursesPage extends Component {
             >
               Add Course
             </button>
-            <SortCourse handleOptionChange={this.handleChange} />
-            <CourseList
-              courses={this.sortByOption(
-                this.props.courses,
-                this.state.sortingOption
-              )}
-              onDelete={this.handleDelete}
-            />
+            {this.state.courseLength > 0 ? (
+              <>
+                <SortCourse handleOptionChange={this.handleChange} />
+                <CourseList
+                  courses={this.sortByOption(
+                    this.props.courses,
+                    this.state.sortingOption
+                  )}
+                  onDelete={this.handleDelete}
+                />
+              </>
+            ) : (
+              <h2 style={{ color: "red" }}>Course List is Empty</h2>
+            )}
           </>
         )}
       </>
