@@ -12,6 +12,7 @@ import SortCourse from "./SortCourse";
 class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
+    sortingOption: "Sort By Id",
   };
   componentDidMount() {
     const { authors, courses, actions } = this.props;
@@ -36,6 +37,20 @@ class CoursesPage extends Component {
       toast.error("Delete Failed", { autoClose: false });
     }
   };
+  handleChange = (sortingOptions) => {
+    console.log("handleOptionChange:" + sortingOptions);
+    this.setState({ sortingOption: sortingOptions });
+  };
+  sortByOption = (courses, sortBy) => {
+    console.log("sortByOption:" + sortBy);
+    console.log("sortByOption:" + sortBy.includes("Id"));
+    if (sortBy.includes("Id")) {
+      courses.sort(function (c1, c2) {
+        return c2.id - c1.id;
+      });
+    }
+    return courses;
+  };
   render() {
     return (
       <>
@@ -52,11 +67,12 @@ class CoursesPage extends Component {
             >
               Add Course
             </button>
-            <SortCourse />
+            <SortCourse handleOptionChange={this.handleChange} />
             <CourseList
-              courses={this.props.courses.sort(function (c1, c2) {
-                return c2.id - c1.id;
-              })}
+              courses={this.sortByOption(
+                this.props.courses,
+                this.state.sortingOption
+              )}
               onDelete={this.handleDelete}
             />
           </>

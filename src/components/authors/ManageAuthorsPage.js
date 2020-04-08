@@ -8,11 +8,11 @@ import AuthorForm from "./AuthorForm";
 import { newAuthor } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 
-function ManageAuthorsPage({ authors, actions, history, id, ...props }) {
+function ManageAuthorsPage({ authors, actions, history, ...props }) {
   const [author, setAuthor] = useState({ ...props.author });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -21,11 +21,7 @@ function ManageAuthorsPage({ authors, actions, history, id, ...props }) {
     } else {
       setAuthor({ ...props.author });
     }
-    console.log("author:" + author.id);
-    if (author.id === null) {
-      setLoading(true);
-    }
-  }, [props.author, id]);
+  }, [props.author]);
   function isFormValid() {
     const _errors = {};
     if (!author.name) _errors.name = "Name Is Required";
@@ -95,6 +91,5 @@ ManageAuthorsPage.propTypes = {
   actions: PropTypes.object.isRequired,
   history: PropTypes.object,
   author: PropTypes.object.isRequired,
-  id: PropTypes.number,
 };
 export default connect(mapStateToProps, mapActionsToProps)(ManageAuthorsPage);
