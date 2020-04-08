@@ -28,33 +28,38 @@ class CoursesPage extends Component {
       });
     }
   }
+
   handleDelete = async (course) => {
     toast.success("Course Deleted");
     try {
       await this.props.actions.deleteCourse(course);
     } catch (error) {
-      console.log(error);
       toast.error("Delete Failed", { autoClose: false });
     }
   };
   handleChange = (sortingOptions) => {
-    console.log("handleOptionChange:" + sortingOptions);
     this.setState({ sortingOption: sortingOptions });
   };
   sortByOption = (courses, sortBy) => {
-    console.log("sortBy:" + sortBy);
-    console.log("sortByOption:" + sortBy.includes("id"));
     switch (sortBy) {
       case "id":
-        console.log("inside case:" + sortBy);
         return courses.sort(function (c1, c2) {
           return c2.id - c1.id;
         });
 
       case "title":
-        console.log("inside case:" + sortBy);
         return courses.sort(function (c1, c2) {
-          return c1.title - c2.title;
+          return c1.title > c2.title;
+        });
+
+      case "category":
+        return courses.sort(function (c1, c2) {
+          return c1.category > c2.category;
+        });
+
+      case "authorname":
+        return courses.sort(function (c1, c2) {
+          return c1.authorName.toLowerCase() > c2.authorName.toLowerCase();
         });
     }
     return courses;
