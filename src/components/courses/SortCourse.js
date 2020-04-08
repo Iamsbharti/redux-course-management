@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 function SortCourse({ handleOptionChange }) {
-  const [sorting, setSorting] = useState("Below List is sorted By Id");
+  const options = [
+    { name: "Sort By Id", value: "id" },
+    { name: "Sort By AuthorName", value: "authorname" },
+    { name: "Sort By Course", value: "title" },
+    { name: "Sort By category", value: "category" },
+  ];
+  const [selectedOption, setSelectedOption] = useState(options[0].value);
 
   function handleChange(event) {
-    const { name, value } = event.target;
-    setSorting({ [name]: value });
+    const { value } = event.target;
+    setSelectedOption(value);
   }
   useEffect(() => {
-    console.log(sorting);
-    handleOptionChange(sorting);
-  }, [sorting]);
+    handleOptionChange(selectedOption);
+  }, [selectedOption]);
 
   return (
     <div className="form-group">
       <label htmlFor="Sorting">Sorting Option</label>
       <div className="field">
         <select
-          name="sorting"
-          value={sorting.sorting}
+          value={selectedOption}
           onChange={handleChange}
           className="form-control"
         >
-          <option>Below List is sorted By Id</option>
-          <option>Sort By Author Name</option>
-          <option>Sort By Category</option>
-          <option>Sort By Course Name</option>
+          {options.map((ops) => (
+            <option key={ops.value} value={ops.value}>
+              {ops.name}
+            </option>
+          ))}
         </select>
       </div>
     </div>

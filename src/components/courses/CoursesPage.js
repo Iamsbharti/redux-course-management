@@ -12,7 +12,7 @@ import SortCourse from "./SortCourse";
 class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
-    sortingOption: "Sort By Id",
+    sortingOption: "Sort By id",
   };
   componentDidMount() {
     const { authors, courses, actions } = this.props;
@@ -42,12 +42,20 @@ class CoursesPage extends Component {
     this.setState({ sortingOption: sortingOptions });
   };
   sortByOption = (courses, sortBy) => {
-    console.log("sortByOption:" + sortBy);
-    console.log("sortByOption:" + sortBy.includes("Id"));
-    if (sortBy.includes("Id")) {
-      courses.sort(function (c1, c2) {
-        return c2.id - c1.id;
-      });
+    console.log("sortBy:" + sortBy);
+    console.log("sortByOption:" + sortBy.includes("id"));
+    switch (sortBy) {
+      case "id":
+        console.log("inside case:" + sortBy);
+        return courses.sort(function (c1, c2) {
+          return c2.id - c1.id;
+        });
+
+      case "title":
+        console.log("inside case:" + sortBy);
+        return courses.sort(function (c1, c2) {
+          return c1.title - c2.title;
+        });
     }
     return courses;
   };
