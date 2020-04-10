@@ -9,21 +9,33 @@ import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 import SortCourse from "./SortCourse";
+import Pagination from "../common/Pagination";
 class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
     sortingOption: "Sort By id",
     courseLength: 0,
+    currentCourse: [],
+    currentPage: 1,
+    coursePerPage: 4,
+    indexOfLastCourse: this.currentPage * this.coursePerPage,
+    indexOfFirstCourse: this.indexOfLastCourse - this.coursePerPage,
   };
+
   componentDidMount() {
     const { authors, courses, actions } = this.props;
-
     if (courses.length === 0) {
       actions.loadCourses().catch((error) => {
         alert("Loading courses failed" + error);
       });
     } else {
       this.setState({ courseLength: this.props.courses.length });
+      this.setState({
+        currentCourse: this.props.courses.slice(
+          this.state.indexOfFirstCourse,
+          this.state.indexOfLastCourse
+        ),
+      });
     }
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -31,6 +43,7 @@ class CoursesPage extends Component {
       });
     }
   }
+  //Get Current Courses
 
   handleDelete = async (course) => {
     toast.success("Course Deleted");
@@ -42,6 +55,9 @@ class CoursesPage extends Component {
   };
   handleChange = (sortingOptions) => {
     this.setState({ sortingOption: sortingOptions });
+  };
+  handlePageChange = (pageNumber) => {
+    this.setState({ activePage: pageNumber });
   };
   sortByOption = (courses, sortBy) => {
     switch (sortBy) {
@@ -86,6 +102,10 @@ class CoursesPage extends Component {
             {this.state.courseLength > 0 ? (
               <>
                 <SortCourse handleOptionChange={this.handleChange} />
+                <Pagination
+                  coursePerPage={this.state.coursePerPage}
+                  totalCourse={this.state.courseLength}
+                />
                 <CourseList
                   courses={this.sortByOption(
                     this.props.courses,
