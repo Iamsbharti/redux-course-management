@@ -5,7 +5,6 @@ function Pagination({ coursePerPage, totalCourse }) {
   for (let i = 0; i < Math.ceil(coursePerPage / totalCourse); i++) {
     pageNumbers.push(i);
   }
-  debugger;
   return (
     <nav>
       <ul className="pagination">

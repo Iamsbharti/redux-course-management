@@ -9,17 +9,12 @@ import { Redirect } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 import SortCourse from "./SortCourse";
-import Pagination from "../common/Pagination";
+
 class CoursesPage extends Component {
   state = {
     redirectToAddCoursePage: false,
     sortingOption: "Sort By id",
     courseLength: 0,
-    currentCourse: [],
-    currentPage: 1,
-    coursePerPage: 4,
-    indexOfLastCourse: this.currentPage * this.coursePerPage,
-    indexOfFirstCourse: this.indexOfLastCourse - this.coursePerPage,
   };
 
   componentDidMount() {
@@ -30,12 +25,6 @@ class CoursesPage extends Component {
       });
     } else {
       this.setState({ courseLength: this.props.courses.length });
-      this.setState({
-        currentCourse: this.props.courses.slice(
-          this.state.indexOfFirstCourse,
-          this.state.indexOfLastCourse
-        ),
-      });
     }
     if (authors.length === 0) {
       actions.loadAuthors().catch((error) => {
@@ -102,10 +91,6 @@ class CoursesPage extends Component {
             {this.state.courseLength > 0 ? (
               <>
                 <SortCourse handleOptionChange={this.handleChange} />
-                <Pagination
-                  coursePerPage={this.state.coursePerPage}
-                  totalCourse={this.state.courseLength}
-                />
                 <CourseList
                   courses={this.sortByOption(
                     this.props.courses,
