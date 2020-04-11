@@ -18,15 +18,15 @@ describe("Async Action", () => {
 describe("Load course thunk", () => {
   it("should create BEGIN_API_CALL and LOAD_COURSE_SUCCESS actions when loading course", () => {
     //mock api call
-    fetchMock.mock("*", {
+    fetchMock.get("*", {
       body: courses,
-      headers: { "content-type": "application/json" }
+      headers: { "content-type": "application/json" },
     });
 
     //arrange
     const expectedActions = [
       { type: types.BEGIN_API_CALL },
-      { type: types.LOAD_COURSES_SUCCESS, courses }
+      { type: types.LOAD_COURSES_SUCCESS, courses },
     ];
 
     //mock store
@@ -39,20 +39,19 @@ describe("Load course thunk", () => {
   });
 });
 
-/*describe("Update Course Thunk", () => {
+describe("Update Course Thunk", () => {
   it("Should Create a BEGIN_API_CALL and UPDATE_COURSE_SUCCESS actions when saving a course", () => {
     //mock api call
-    fetchMock.mock("*", {
-      body: courses[0],
+    fetchMock.post("http://localhost:3000/courses/", {
+      body: courses[0].id,
       headers: { "content-type": "applciation/json" },
-      overwriteRoutes: true
     });
 
     //arrange
     const course = courses[0];
     const expectedActions = [
       { type: types.BEGIN_API_CALL },
-      { type: types.UPDATE_COURSE_SUCCESS, course }
+      { type: types.UPDATE_COURSE_SUCCESS, course },
     ];
     //mock store
     const store = mockStore({ course: [] });
@@ -60,9 +59,9 @@ describe("Load course thunk", () => {
     //assert
     return store
       .dispatch(courseActions.saveCourse(course))
-      .then(savedCourse => {
+      .then((savedCourse) => {
         expect(store.getActions()).toEqual(expectedActions);
+        //expect(savedCourse).toHaveProperty(object);
       });
   });
 });
-*/
