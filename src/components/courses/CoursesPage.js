@@ -88,7 +88,7 @@ class CoursesPage extends Component {
             >
               Add Course
             </button>
-            {this.state.courseLength > 0 ? (
+            {this.props.courses.length > 0 ? (
               <>
                 <SortCourse handleOptionChange={this.handleChange} />
                 <CourseList
