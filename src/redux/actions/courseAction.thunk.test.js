@@ -39,7 +39,7 @@ describe("Load course thunk", () => {
   });
 });
 
-describe("Update Course Thunk", () => {
+/*describe("Update Course Thunk", () => {
   it("Should Create a BEGIN_API_CALL and UPDATE_COURSE_SUCCESS actions when saving a course", () => {
     //mock api call
     fetchMock.post("http://localhost:3000/courses/", {
@@ -65,3 +65,4 @@ describe("Update Course Thunk", () => {
       });
   });
 });
+*/
